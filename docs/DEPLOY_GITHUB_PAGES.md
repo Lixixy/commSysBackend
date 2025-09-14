@@ -103,7 +103,7 @@ gh-pages -d docs/.vitepress/dist
 
 部署完成后，您可以通过以下URL访问文档：
 
-```
+```url
 https://[your-username].github.io/commonSys/
 ```
 

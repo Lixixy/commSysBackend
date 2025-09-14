@@ -10,7 +10,7 @@ spring:
   
   # 数据库配置
   datasource:
-    url: jdbc:mysql://localhost:5110/comm_sys?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    url: jdbc:mysql://localhost:21/comm_sys?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
     username: ${DB_USERNAME:root}
     password: ${DB_PASSWORD:114514}
     driver-class-name: com.mysql.cj.jdbc.Driver
