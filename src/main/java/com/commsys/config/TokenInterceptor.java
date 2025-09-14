@@ -11,6 +11,7 @@ import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.hibernate.service.spi.ServiceException;
 import org.springframework.stereotype.Component;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -63,7 +64,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (authRequired.required()) {
                 // 5. 验证Token
                 if (tokenValue == null || tokenValue.isEmpty()) {
-                    returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, "未提供Token"));
+                    returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), "未提供Token"));
                     return false;
                 }
                 
@@ -71,13 +72,13 @@ public class TokenInterceptor implements HandlerInterceptor {
                     // 6. 检查Token是否有效
                     Token token = tokenService.getTokenByValue(tokenValue);
                     if (token == null) {
-                        returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, "无效的Token"));
+                        returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), "无效的Token"));
                         return false;
                     }
                     
                     // 7. 检查Token是否已过期
                     if (token.getStatus() == 0 || token.getExpiresAt().isBefore(LocalDateTime.now())) {
-                        returnResult(response, Result.failure(ResultCode.TOKEN_EXPIRED, "Token已过期"));
+                        returnResult(response, Result.error(ResultCode.TOKEN_EXPIRED.getCode(), "Token已过期"));
                         return false;
                     }
                     
@@ -86,7 +87,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     log.debug("Token验证通过，用户ID: {}", token.getUserId());
                 } catch (ServiceException e) {
                     log.error("Token验证失败: {}", e.getMessage());
-                    returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, e.getMessage()));
+                    returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), e.getMessage()));
                     return false;
                 }
             }
@@ -98,7 +99,7 @@ public class TokenInterceptor implements HandlerInterceptor {
             if (authRequired.required()) {
                 // 10. 验证Token
                 if (tokenValue == null || tokenValue.isEmpty()) {
-                    returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, "未提供Token"));
+                    returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), "未提供Token"));
                     return false;
                 }
                 
@@ -106,13 +107,13 @@ public class TokenInterceptor implements HandlerInterceptor {
                     // 11. 检查Token是否有效
                     Token token = tokenService.getTokenByValue(tokenValue);
                     if (token == null) {
-                        returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, "无效的Token"));
+                        returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), "无效的Token"));
                         return false;
                     }
                     
                     // 12. 检查Token是否已过期
                     if (token.getStatus() == 0 || token.getExpiresAt().isBefore(LocalDateTime.now())) {
-                        returnResult(response, Result.failure(ResultCode.TOKEN_EXPIRED, "Token已过期"));
+                        returnResult(response, Result.error(ResultCode.TOKEN_EXPIRED.getCode(), "Token已过期"));
                         return false;
                     }
                     
@@ -121,7 +122,7 @@ public class TokenInterceptor implements HandlerInterceptor {
                     log.debug("Token验证通过，用户ID: {}", token.getUserId());
                 } catch (ServiceException e) {
                     log.error("Token验证失败: {}", e.getMessage());
-                    returnResult(response, Result.failure(ResultCode.TOKEN_INVALID, e.getMessage()));
+                    returnResult(response, Result.error(ResultCode.TOKEN_INVALID.getCode(), e.getMessage()));
                     return false;
                 }
             }
