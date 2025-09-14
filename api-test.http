@@ -1,0 +1,207 @@
+### 社团管理系统API测试文件
+### 使用IntelliJ IDEA或VS Code的REST Client插件运行
+
+### 1. 系统信息
+GET http://localhost:8080/api/system/info
+
+### 2. 健康检查
+GET http://localhost:8080/api/system/health
+
+### 3. 用户注册
+POST http://localhost:8080/api/usr/register
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "passwordHash": "5d41402abc4b2a76b9719d911017c592",
+  "gender": 1
+}
+
+### 4. 用户登录
+POST http://localhost:8080/api/usr/login
+Content-Type: application/json
+
+{
+  "username": "admin",
+  "passwordHash": "5d41402abc4b2a76b9719d911017c592"
+}
+
+### 5. 高级注册（创建老师账号）
+POST http://localhost:8080/api/usr/reg_plus
+Content-Type: application/json
+
+{
+  "username": "teacher1",
+  "passwordHash": "5d41402abc4b2a76b9719d911017c592",
+  "gender": 1,
+  "roleId": 3,
+  "operatorUserId": 1
+}
+
+### 6. 创建社团
+POST http://localhost:8080/api/club/create
+Content-Type: application/json
+
+{
+  "title": "计算机协会",
+  "description": "计算机技术交流社团",
+  "presidentId": 1,
+  "teacherId": 2,
+  "memberIds": [1, 2],
+  "operatorUserId": 1
+}
+
+### 7. 获取所有社团
+GET http://localhost:8080/api/club/all
+
+### 8. 申请加入社团
+POST http://localhost:8080/api/club/join
+Content-Type: application/json
+
+{
+  "userId": 3,
+  "clubId": 1
+}
+
+### 9. 创建活动
+POST http://localhost:8080/api/activity/create
+Content-Type: application/json
+
+{
+  "clubId": 1,
+  "creatorId": 1,
+  "title": "编程竞赛",
+  "description": "年度编程竞赛活动",
+  "startTime": "2024-12-01T09:00:00",
+  "endTime": "2024-12-01T17:00:00"
+}
+
+### 10. 获取所有活动
+GET http://localhost:8080/api/activity/all
+
+### 11. 获取社团活动列表
+GET http://localhost:8080/api/activity/club/1
+
+### 12. 获取正在进行的活动
+GET http://localhost:8080/api/activity/ongoing
+
+### 13. 获取所有用户
+GET http://localhost:8080/api/usr/all?page=1&size=10
+
+### 14. 根据身份获取用户
+GET http://localhost:8080/api/usr/role/0
+
+### 15. 检查用户名是否存在
+GET http://localhost:8080/api/usr/check/username/admin
+
+### 16. 修改个人资料
+POST http://localhost:8080/api/usr/change?userId=1
+Content-Type: application/json
+
+{
+  "email": "admin@example.com",
+  "phone": "13800138000",
+  "realName": "管理员",
+  "gender": 1,
+  "remark": "系统管理员"
+}
+
+### 17. 修改密码
+POST http://localhost:8080/api/usr/change_passw
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "oldPasswordHash": "5d41402abc4b2a76b9719d911017c592",
+  "newPasswordHash": "098f6bcd4621d373cade4e832627b4f6",
+  "operatorUserId": 1
+}
+
+### 18. 用户提权/降权
+POST http://localhost:8080/api/usr/permiss
+Content-Type: application/json
+
+{
+  "targetUserId": 3,
+  "operatorUserId": 1,
+  "targetRoleId": 1
+}
+
+### 19. 禁用/启用社团
+POST http://localhost:8080/api/club/close_open
+Content-Type: application/json
+
+{
+  "isEnabled": false,
+  "operatorUserId": 1,
+  "clubId": 1,
+  "disableReason": "违反规定"
+}
+
+### 20. 编辑活动
+POST http://localhost:8080/api/activity/change
+Content-Type: application/json
+
+{
+  "activityId": 1,
+  "operatorId": 1,
+  "clubId": 1,
+  "title": "编程竞赛（修改）",
+  "description": "年度编程竞赛活动（已修改）",
+  "startTime": "2024-12-01T10:00:00",
+  "endTime": "2024-12-01T18:00:00"
+}
+
+### 21. 提前结束活动
+POST http://localhost:8080/api/activity/close
+Content-Type: application/json
+
+{
+  "clubId": 1,
+  "activityId": 1,
+  "operatorId": 1,
+  "closeReason": "天气原因"
+}
+
+### 22. 退出社团
+POST http://localhost:8080/api/club/exit
+Content-Type: application/json
+
+{
+  "userId": 3
+}
+
+### 23. 删除用户
+POST http://localhost:8080/api/usr/del
+Content-Type: application/json
+
+{
+  "operatorUserId": 1,
+  "targetUserId": 3
+}
+
+### 24. 刷新Token
+GET http://localhost:8080/api/usr/re_token?token=YOUR_TOKEN_HERE
+
+### 25. 注销Token
+POST http://localhost:8080/api/usr/logout
+Content-Type: application/json
+
+{
+  "token": "YOUR_TOKEN_HERE"
+}
+
+### 26. 获取系统配置
+GET http://localhost:8080/api/config/all
+
+### 27. 获取动态配置值
+GET http://localhost:8080/api/system/config/system.name
+
+### 28. 获取动态配置值（带默认值）
+GET http://localhost:8080/api/system/config/system.version/default?defaultValue=1.0.0
+
+### 29. 初始化默认配置
+POST http://localhost:8080/api/config/init
+
+### 30. 手动删除数据库数据
+POST http://localhost:8080/api/system/del_dbdata?operatorUserId=1

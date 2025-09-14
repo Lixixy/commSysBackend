@@ -1,0 +1,74 @@
+# 应用配置
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: common-sys
+
+  # 数据库配置
+  datasource:
+    url: jdbc:sqlite:common_sys.db
+    driver-class-name: org.sqlite.JDBC
+    hikari:
+      maximum-pool-size: 1
+      minimum-idle: 1
+      connection-timeout: 30000
+      idle-timeout: 600000
+      max-lifetime: 1800000
+      pool-name: CommonSysHikariCP
+
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        dialect: org.hibernate.community.dialect.SQLiteDialect
+        format_sql: true
+        use_sql_comments: true
+    database-platform: org.hibernate.community.dialect.SQLiteDialect
+
+  # Jackson配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+# 日志配置
+logging:
+  level:
+    com.commonsys: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,configprops
+  endpoint:
+    health:
+      show-details: always
+
+# 自定义配置
+app:
+  # 数据库类型：mysql 或 sqlite
+  database:
+    type: sqlite
+  # 分页配置
+  page:
+    default-size: 10
+    max-size: 100
+  # 文件上传配置
+  upload:
+    path: ./uploads
+    max-size: 10MB

@@ -1,0 +1,86 @@
+# 应用配置
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: common-sys
+  
+  # 数据库配置
+  datasource:
+    url: jdbc:mysql://localhost:5110/comm_sys?createDatabaseIfNotExist=true&useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USERNAME:root}
+    password: ${DB_PASSWORD:114514}
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    hikari:
+      maximum-pool-size: 10
+      minimum-idle: 5
+      connection-timeout: 30000
+      idle-timeout: 300000
+      max-lifetime: 600000
+      pool-name: CommSysHikariCP
+      leak-detection-threshold: 30000
+      auto-commit: true
+
+  # JPA配置
+  jpa:
+    hibernate:
+      ddl-auto: update
+      use-new-id-generator-mappings: false
+    show-sql: true
+    open-in-view: false
+    properties:
+      hibernate:
+        # 修改方言类为标准MySQL8方言
+        dialect: org.hibernate.dialect.MySQLDialect
+        format_sql: true
+        use_sql_comments: true
+        connection_provider_disables_autocommit: true
+        jdbc.batch_size: 20
+        order_inserts: true
+        order_updates: true
+    # 修改数据库平台为标准MySQL8方言
+    database-platform: org.hibernate.dialect.MySQLDialect
+
+  # Jackson配置
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: Asia/Shanghai
+    default-property-inclusion: non_null
+
+# 日志配置
+logging:
+  level:
+    com.commonsys: DEBUG
+    org.springframework.web: INFO
+    org.hibernate.SQL: DEBUG
+    org.hibernate.type.descriptor.sql.BasicBinder: TRACE
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+
+# 管理端点配置
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,metrics,configprops
+  endpoint:
+    health:
+      show-details: always
+
+# 自定义配置
+app:
+  # 数据库类型：mysql 或 sqlite
+  database:
+    type: mysql
+  # 分页配置
+  page:
+    default-size: 10
+    max-size: 100
+  # 文件上传配置
+  upload:
+    path: ./uploads
+    max-size: 10MB
