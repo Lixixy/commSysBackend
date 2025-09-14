@@ -1,0 +1,1 @@
+import{_ as i,c as a,o as t,af as n}from"./chunks/framework.BdmYG2nX.js";const c=JSON.parse('{"title":"社团管理API","description":"","frontmatter":{},"headers":[],"relativePath":"api/club.md","filePath":"api/club.md"}'),l={name:"api/club.md"};function e(h,s,p,k,o,r){return t(),a("div",null,[...s[0]||(s[0]=[n("",85)])])}const g=i(l,[["render",e]]);export{c as __pageData,g as default};
