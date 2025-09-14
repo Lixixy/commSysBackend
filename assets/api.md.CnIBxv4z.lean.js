@@ -1,1 +1,0 @@
-import{_ as e,c as i,o as t,af as r}from"./chunks/framework.BdmYG2nX.js";const d=JSON.parse('{"title":"社团管理系统API文档","description":"","frontmatter":{},"headers":[],"relativePath":"api.md","filePath":"api.md"}'),l={name:"api.md"};function n(p,a,o,s,_,h){return t(),i("div",null,[...a[0]||(a[0]=[r("",4)])])}const f=e(l,[["render",n]]);export{d as __pageData,f as default};
