@@ -1,5 +1,6 @@
 package com.commsys.controller;
 
+import com.commsys.annotation.AuthRequired;
 import com.commsys.common.PageResult;
 import com.commsys.common.Result;
 import com.commsys.entity.Activity;
@@ -34,6 +35,7 @@ public class ActivityController {
      * @param request 创建活动请求
      * @return 创建结果
      */
+    @AuthRequired
     @PostMapping("/create")
     public Result<Activity> createActivity(@Valid @RequestBody CreateActivityRequest request) {
         log.info("创建活动请求: {}, 社团ID: {}, 发起者: {}", 
@@ -49,6 +51,7 @@ public class ActivityController {
      * @param request 删除活动请求
      * @return 删除结果
      */
+    @AuthRequired
     @PostMapping("/del")
     public Result<Void> deleteActivity(@Valid @RequestBody DeleteActivityRequest request) {
         log.info("删除活动请求: 活动ID={}, 社团ID={}, 操作者={}", 
@@ -63,6 +66,7 @@ public class ActivityController {
      * @param request 编辑活动请求
      * @return 编辑结果
      */
+    @AuthRequired
     @PostMapping("/change")
     public Result<Activity> editActivity(@Valid @RequestBody EditActivityRequest request) {
         log.info("编辑活动请求: 活动ID={}, 操作者={}, 社团ID={}", 
@@ -79,6 +83,7 @@ public class ActivityController {
      * @param request 结束活动请求
      * @return 结束结果
      */
+    @AuthRequired
     @PostMapping("/close")
     public Result<Void> closeActivity(@Valid @RequestBody CloseActivityRequest request) {
         log.info("提前结束活动请求: 活动ID={}, 社团ID={}, 操作者={}", 
@@ -93,6 +98,7 @@ public class ActivityController {
      * 
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/all")
     public Result<List<Activity>> getAllActivities() {
         log.info("获取所有活动请求");
@@ -106,6 +112,7 @@ public class ActivityController {
      * @param id 活动ID
      * @return 活动信息
      */
+    @AuthRequired
     @GetMapping("/{id}")
     public Result<Activity> getActivityById(@PathVariable Long id) {
         log.info("根据ID获取活动请求: {}", id);
@@ -119,6 +126,7 @@ public class ActivityController {
      * @param clubId 社团ID
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/club/{clubId}")
     public Result<List<Activity>> getActivitiesByClubId(@PathVariable Long clubId) {
         log.info("根据社团ID获取活动请求: {}", clubId);
@@ -132,6 +140,7 @@ public class ActivityController {
      * @param creatorId 发起者ID
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/creator/{creatorId}")
     public Result<List<Activity>> getActivitiesByCreatorId(@PathVariable Long creatorId) {
         log.info("根据发起者ID获取活动请求: {}", creatorId);
@@ -145,6 +154,7 @@ public class ActivityController {
      * @param status 状态
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/status/{status}")
     public Result<List<Activity>> getActivitiesByStatus(@PathVariable Integer status) {
         log.info("根据状态获取活动请求: {}", status);
@@ -159,6 +169,7 @@ public class ActivityController {
      * @param status 状态
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/club/{clubId}/status/{status}")
     public Result<List<Activity>> getActivitiesByClubIdAndStatus(@PathVariable Long clubId, 
                                                                 @PathVariable Integer status) {
@@ -174,6 +185,7 @@ public class ActivityController {
      * @param endTime 结束时间
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/time")
     public Result<List<Activity>> getActivitiesByTimeRange(
             @RequestParam LocalDateTime startTime,
@@ -188,6 +200,7 @@ public class ActivityController {
      * 
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/ongoing")
     public Result<List<Activity>> getOngoingActivities() {
         log.info("获取正在进行的活动请求");
@@ -200,6 +213,7 @@ public class ActivityController {
      * 
      * @return 活动列表
      */
+    @AuthRequired
     @GetMapping("/ended")
     public Result<List<Activity>> getEndedActivities() {
         log.info("获取已结束的活动请求");
@@ -217,6 +231,7 @@ public class ActivityController {
      * @param status 状态
      * @return 分页活动列表
      */
+    @AuthRequired
     @GetMapping
     public Result<PageResult<Activity>> getActivities(
             @RequestParam(defaultValue = "1") Integer page,

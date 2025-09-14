@@ -52,6 +52,20 @@ public class TokenService {
     }
 
     /**
+     * 根据Token值获取Token对象
+     * 
+     * @param tokenValue Token值
+     * @return Token对象
+     * @throws BusinessException 如果Token不存在
+     */
+    public Token getTokenByValue(String tokenValue) {
+        log.info("获取Token: {}", tokenValue);
+        
+        return tokenRepository.findByTokenValue(tokenValue)
+                .orElseThrow(() -> new BusinessException("Token不存在"));
+    }
+    
+    /**
      * 验证Token
      * 
      * @param tokenValue Token值

@@ -1,5 +1,6 @@
 package com.commsys.controller;
 
+import com.commsys.annotation.AuthRequired;
 import com.commsys.common.PageResult;
 import com.commsys.common.Result;
 import com.commsys.entity.Token;
@@ -103,6 +104,7 @@ public class UserController {
      * @param user 用户信息
      * @return 修改结果
      */
+    @AuthRequired
     @PostMapping("/change")
     public Result<User> changeProfile(@RequestParam Long userId, @Valid @RequestBody User user) {
         log.info("修改个人资料请求: {}", userId);
@@ -116,6 +118,7 @@ public class UserController {
      * @param request 删除请求
      * @return 删除结果
      */
+    @AuthRequired
     @PostMapping("/del")
     public Result<Void> deleteUser(@Valid @RequestBody DeleteUserRequest request) {
         log.info("删除用户请求: 操作者={}, 目标用户={}", request.getOperatorUserId(), request.getTargetUserId());
@@ -129,6 +132,7 @@ public class UserController {
      * @param request 修改密码请求
      * @return 修改结果
      */
+    @AuthRequired
     @PostMapping("/change_passw")
     public Result<Void> changePassword(@Valid @RequestBody ChangePasswordRequest request) {
         log.info("修改密码请求: 用户ID={}", request.getUserId());
@@ -143,6 +147,7 @@ public class UserController {
      * @param request 权限修改请求
      * @return 修改结果
      */
+    @AuthRequired
     @PostMapping("/permiss")
     public Result<Void> changePermission(@Valid @RequestBody ChangePermissionRequest request) {
         log.info("用户提权/降权请求: 目标用户={}, 操作者={}, 目标身份={}", 
@@ -162,6 +167,7 @@ public class UserController {
      * @param status 状态
      * @return 分页用户列表
      */
+    @AuthRequired
     @GetMapping("/all")
     public Result<PageResult<User>> getUsers(
             @RequestParam(defaultValue = "1") Integer page,
@@ -181,6 +187,7 @@ public class UserController {
      * 
      * @return 用户列表
      */
+    @AuthRequired
     @GetMapping("/list")
     public Result<List<User>> getAllUsers() {
         log.info("获取所有用户请求");
@@ -194,6 +201,7 @@ public class UserController {
      * @param roleId 身份ID
      * @return 用户列表
      */
+    @AuthRequired
     @GetMapping("/role/{roleId}")
     public Result<List<User>> getUsersByRoleId(@PathVariable Integer roleId) {
         log.info("根据身份ID获取用户请求: {}", roleId);
@@ -207,6 +215,7 @@ public class UserController {
      * @param parentClubId 父社团ID
      * @return 用户列表
      */
+    @AuthRequired
     @GetMapping("/club/{parentClubId}")
     public Result<List<User>> getUsersByParentClubId(@PathVariable Long parentClubId) {
         log.info("根据父社团ID获取用户请求: {}", parentClubId);

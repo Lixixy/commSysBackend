@@ -1,5 +1,6 @@
 package com.commsys.controller;
 
+import com.commsys.annotation.AuthRequired;
 import com.commsys.common.PageResult;
 import com.commsys.common.Result;
 import com.commsys.entity.Club;
@@ -34,6 +35,7 @@ public class ClubController {
      * @param request 创建社团请求
      * @return 创建结果
      */
+    @AuthRequired
     @PostMapping("/create")
     public Result<Club> createClub(@Valid @RequestBody CreateClubRequest request) {
         log.info("创建社团请求: {}, 社长: {}", request.getTitle(), request.getPresidentId());
@@ -49,6 +51,7 @@ public class ClubController {
      * @param request 禁用/启用请求
      * @return 操作结果
      */
+    @AuthRequired
     @PostMapping("/close_open")
     public Result<Void> closeOpenClub(@Valid @RequestBody CloseOpenClubRequest request) {
         log.info("禁用/启用社团请求: 社团ID={}, 启用={}, 操作者={}", 
@@ -64,6 +67,7 @@ public class ClubController {
      * @param request 加入社团请求
      * @return 操作结果
      */
+    @AuthRequired
     @PostMapping("/join")
     public Result<Void> joinClub(@Valid @RequestBody JoinClubRequest request) {
         log.info("申请加入社团请求: 用户ID={}, 社团ID={}", request.getUserId(), request.getClubId());
@@ -77,6 +81,7 @@ public class ClubController {
      * @param request 退出社团请求
      * @return 操作结果
      */
+    @AuthRequired
     @PostMapping("/exit")
     public Result<Void> exitClub(@Valid @RequestBody ExitClubRequest request) {
         log.info("退出社团请求: 用户ID={}", request.getUserId());
@@ -89,6 +94,7 @@ public class ClubController {
      * 
      * @return 社团列表
      */
+    @AuthRequired
     @GetMapping("/all")
     public Result<List<Club>> getAllClubs() {
         log.info("获取所有社团请求");
@@ -102,6 +108,7 @@ public class ClubController {
      * @param id 社团ID
      * @return 社团信息
      */
+    @AuthRequired
     @GetMapping("/{id}")
     public Result<Club> getClubById(@PathVariable Long id) {
         log.info("根据ID获取社团请求: {}", id);
@@ -115,6 +122,7 @@ public class ClubController {
      * @param status 状态
      * @return 社团列表
      */
+    @AuthRequired
     @GetMapping("/status/{status}")
     public Result<List<Club>> getClubsByStatus(@PathVariable Integer status) {
         log.info("根据状态获取社团请求: {}", status);
@@ -128,6 +136,7 @@ public class ClubController {
      * @param presidentId 社长ID
      * @return 社团列表
      */
+    @AuthRequired
     @GetMapping("/president/{presidentId}")
     public Result<List<Club>> getClubsByPresidentId(@PathVariable Long presidentId) {
         log.info("根据社长ID获取社团请求: {}", presidentId);
@@ -144,6 +153,7 @@ public class ClubController {
      * @param status 状态
      * @return 分页社团列表
      */
+    @AuthRequired
     @GetMapping
     public Result<PageResult<Club>> getClubs(
             @RequestParam(defaultValue = "1") Integer page,
@@ -161,6 +171,7 @@ public class ClubController {
      * @param clubId 社团ID
      * @return 成员列表
      */
+    @AuthRequired
     @GetMapping("/{clubId}/members")
     public Result<List<ClubMember>> getClubMembers(@PathVariable Long clubId) {
         log.info("获取社团成员列表请求: {}", clubId);
@@ -174,6 +185,7 @@ public class ClubController {
      * @param userId 用户ID
      * @return 社团列表
      */
+    @AuthRequired
     @GetMapping("/user/{userId}")
     public Result<List<ClubMember>> getUserClubs(@PathVariable Long userId) {
         log.info("获取用户所在的社团列表请求: {}", userId);
@@ -188,6 +200,7 @@ public class ClubController {
      * @param userId 用户ID
      * @return 检查结果
      */
+    @AuthRequired
     @GetMapping("/{clubId}/check/{userId}")
     public Result<Boolean> isUserInClub(@PathVariable Long clubId, @PathVariable Long userId) {
         log.info("检查用户是否在社团中请求: 社团ID={}, 用户ID={}", clubId, userId);
