@@ -153,7 +153,7 @@ java -jar target/comm-sys-1.0.0.jar --spring.profiles.active=prod
 
 ## API接口
 
-> 详见 ![本项目的 GitHub Pages](https://lixixy.github.io/commSysBackend/)
+> 详见 [本项目的 GitHub Pages](https://lixixy.github.io/commSysBackend/)
 
 ## 配置说明
 
